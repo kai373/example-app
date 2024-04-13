@@ -22,7 +22,7 @@ class DeleteTest extends TestCase
 
         $this->actingAs($user); // 指定したユーザーでログインした状態にする
         
-        $response = $this->from('posts')->delete('/tweet/delete/' . $tweet->id); // 作成したつぶやきIDを作成
+        $response = $this->delete('/tweet/delete/' . $tweet->id); // 作成したつぶやきIDを作成
 
         $response->assertRedirect('/tweet');
     }
