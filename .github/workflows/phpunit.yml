@@ -35,7 +35,7 @@ jobs:
        - name: Setup PHP
          uses: shivammathur/setup-php@v2
          with:
-           php-version: '8.3'
+           php-version: '8.1'
            tools: composer:v2
        - name: Copy .env
          run: cp .env.example .env.testing
@@ -48,6 +48,3 @@ jobs:
          run: sudo echo "127.0.0.1 mysql.test" | sudo tee -a /etc/hosts
        - name: Execute tests (Unit and Feature tests) via PHPUnit
          run: vendor/bin/phpunit
-       - name: view laravel.log
-         run: cat storage/logs/laravel.log
-         if: ${{ failure() }}
