@@ -3,8 +3,8 @@
 ])
 <div class="p-4">
     <form action="{{ route('tweet.update.put', ['tweetId' => $tweet->id]) }}" method="post">
-        @method('PUT')
         @csrf
+        @method('put')
         @if (session('feedback.success'))
         <x-alert.success>{{ session('feedback.success') }}</x-alert.success>
         @endif
