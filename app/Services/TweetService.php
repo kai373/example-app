@@ -8,7 +8,6 @@ use App\Models\Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Modules\ImageUpload\ImageManagerInterface;
-use Illuminate\Support\Facades\Log;
 
 class TweetService
 {
@@ -38,14 +37,11 @@ class TweetService
 
     public function saveTweet(int $userId, string $content, array $images)
     {
-        try {
-            DB::beginTransaction();
-    
+        DB::transaction(function () use ($userId, $content, $images) {
             $tweet = new Tweet;
             $tweet->user_id = $userId;
             $tweet->content = $content;
             $tweet->save();
-    
             foreach ($images as $image) {
                 $name = $this->imageManager->save($image);
                 $imageModel = new Image();
@@ -53,15 +49,7 @@ class TweetService
                 $imageModel->save();
                 $tweet->images()->attach($imageModel->id);
             }
-    
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            // エラーログを記録するなどのエラー処理をここに記述します。
-            Log::error($e->getMessage());
-            // 必要に応じてエラーを再投げるか、カスタムエラーメッセージを返します。
-            throw $e;
-        }
+        });
     }
 
     public function deleteTweet(int $tweetId)
