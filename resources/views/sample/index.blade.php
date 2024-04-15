@@ -10,9 +10,16 @@
 </head>
 
 <body class="bg-gray-50">
-  <div class="bg-red-500">テスト1</div>
-  <div class="bg-red-500">テスト2</div>
-  <div class="bg-red-500">テスト3</div>
+  <x-layout.single>
+    <h2 class="text-center text-blue-500 text-4xl font-bold mt-8 mb-8">つぶやきアプリ</h2>
+    <x-tweet.form.post></x-tweet.form.post>
+    @foreach($tweets as $tweet)
+      @foreach($tweet->images as $image)
+        <p>{{ $image->name }}</p>
+      @endforeach
+    @endforeach
+    <x-tweet.list :tweets="$tweets"></x-tweet.list>
+  </x-layout.single>
 </body>
 
 </html>
