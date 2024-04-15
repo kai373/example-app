@@ -24,7 +24,11 @@ class AppServiceProvider extends ServiceProvider
                 ],
             ]);
         });
-        $this->app->bind(ImageManagerInterface::class, CloudinaryImageManager::class);
+        if ($this->app->environment('production')) {
+            $this->app->bind(ImageManagerInterface::class, CloudinaryImageManager::class);
+        } else {
+            $this->app->bind(ImageManagerInterface::class, LocalImageManager::class);
+        }
     }
 
     /**
