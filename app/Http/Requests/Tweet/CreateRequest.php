@@ -40,6 +40,6 @@ class CreateRequest extends FormRequest
 
     public function images(): array
     {
-        return $this->file('images, []');
+        return $this->file('images', []);
     }
 }
